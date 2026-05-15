@@ -7,7 +7,7 @@
  *   - optional per-skill fragments (skills that ship `instructions.md`)
  *   - optional per-MCP-server fragments (inline `instructions` field in
  *     `container.json`)
- *   - per-group agent memory (`CLAUDE.local.md`, auto-loaded by Claude Code)
+ *   - per-group agent memory (`CLAUDE.local.md`)
  *
  * Runs on every spawn from `container-runner.buildMounts()`. Deterministic —
  * same inputs produce the same CLAUDE.md, and stale fragments are pruned.
@@ -121,18 +121,22 @@ export function composeGroupClaudeMd(group: AgentGroup): void {
     }
   }
 
+  // Ensure CLAUDE.local.md exists — created empty on first spawn, then owned
+  // by the group. Must happen before composing CLAUDE.md so the import below
+  // is never dangling.
+  const localFile = path.join(groupDir, 'CLAUDE.local.md');
+  if (!fs.existsSync(localFile)) {
+    fs.writeFileSync(localFile, '');
+  }
+
   // Composed entry — imports only.
   const imports = ['@./.claude-shared.md'];
   for (const name of [...desired.keys()].sort()) {
     imports.push(`@./.claude-fragments/${name}`);
   }
+  imports.push('@./CLAUDE.local.md');
   const body = [COMPOSED_HEADER, ...imports, ''].join('\n');
   writeAtomic(path.join(groupDir, 'CLAUDE.md'), body);
-
-  const localFile = path.join(groupDir, 'CLAUDE.local.md');
-  if (!fs.existsSync(localFile)) {
-    fs.writeFileSync(localFile, '');
-  }
 }
 
 /**
