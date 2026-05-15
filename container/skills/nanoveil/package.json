@@ -1,0 +1,37 @@
+{
+  "name": "nanoveil",
+  "version": "1.0.0",
+  "description": "Security scanner for NanoClaw agents — PII redaction, prompt injection detection, secrets scanning",
+  "type": "module",
+  "main": "scanner.mjs",
+  "exports": {
+    ".": "./scanner.mjs",
+    "./cli": "./index.mjs"
+  },
+  "bin": {
+    "nanoveil": "./index.mjs"
+  },
+  "keywords": [
+    "nanoclaw",
+    "security",
+    "pii",
+    "prompt-injection",
+    "llm-guard",
+    "onnx",
+    "ner"
+  ],
+  "author": "Eva Spexard",
+  "license": "MIT",
+  "peerDependencies": {
+    "libphonenumber-js": "^1.13.0",
+    "ibantools": "^4.5.0",
+    "franc": "^6.2.0"
+  },
+  "optionalDependencies": {
+    "@huggingface/transformers": "^4.2.0",
+    "onnxruntime-node": "^1.26.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
