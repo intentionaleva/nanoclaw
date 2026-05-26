@@ -6,7 +6,7 @@ registerResource({
   plural: 'destinations',
   table: 'agent_destinations',
   description:
-    'Agent destination — per-agent routing entry and ACL. Each row authorizes an agent to send messages to a target (channel or another agent) and assigns a local name the agent uses to address it. Names are scoped to the source agent — two agents can have different local names for the same target. Created automatically when wiring channels or when agents create child agents.',
+    'Agent destination — per-agent routing entry and ACL. Each row authorizes an agent to send messages to a target (channel or another agent) and assigns a local name the agent uses to address it. Names are scoped to the source agent — two agents can have different local names for the same target. Created automatically by "wirings create" and when agents create child agents.',
   idColumn: 'agent_group_id',
   scopeField: 'agent_group_id',
   columns: [
